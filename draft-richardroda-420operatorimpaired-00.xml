@@ -42,10 +42,10 @@
 -->
 
   <front>
-    <title abbrev="HTTP Operator Impairment Status Code">An HTTP Status Code to Report Operator Impairment</title>
+    <title abbrev="HTTP Requester Impairment Status Code">An HTTP Status Code to Report Requester Impairment</title>
     <!--  [REPLACE/DELETE] abbrev. The abbreviated title is required if the full title is longer than 39 characters -->
 
-    <seriesInfo name="Internet-Draft" value="draft-richardroda-420operatorimpaired-00"/>
+    <seriesInfo name="Internet-Draft" value="draft-richardroda-420requesterimpaired-00"/>
    
     <author fullname="Richard Roda" initials="RR" role="editor">
       <!-- [CHECK]
@@ -79,7 +79,7 @@
          use by search engines. -->
 
     <abstract>
-      <t>This document specifies a Hypertext Transfer Protocol (HTTP) status code for use when an operation or resource is denied due to operator impairment.</t>
+      <t>This document specifies a Hypertext Transfer Protocol (HTTP) status code for use when an operation or resource is denied due to requester impairment.</t>
     </abstract>
  
   </front>
@@ -88,9 +88,9 @@
     
     <section>
       <name>Introduction</name>
-      <t>This document specifies a Hypertext Transfer Protocol (HTTP) status code for use when a request is denied because the operator is impaired.</t>
-      <t>This request code may be used to provide transparency in cases where one or more valid requests create a dangerous situation, there is a pattern of erratic requests with the potential for danger, or the operator is otherwise detected as impaired.</t>
-      <t>Network-controlled devices are being used for beneficial but potentially dangerous activities such as construction and remote surgery.  Transparency of operator impairment is important for both accurately assessing the risk a given operator presents and preventing damage caused by a high-risk operator.</t>
+      <t>This document specifies a Hypertext Transfer Protocol (HTTP) status code for use when a request is denied because the requester is impaired.</t>
+      <t>This request code may be used to provide transparency in cases where one or more valid requests create a dangerous situation, there is a pattern of erratic requests with the potential for danger, or the requester is otherwise detected as impaired.</t>
+      <t>Network-controlled devices are being used for beneficial but potentially dangerous activities such as construction and remote surgery.  Transparency of requester impairment is important for both accurately assessing the risk a given requester presents and preventing damage caused by a high-risk requester.</t>
       
       <section>
         <name>Requirements Language</name>
@@ -106,11 +106,11 @@
     </section>
     
     <section>
-      <name>420 Operator Impaired</name>
-      <t>The status code 420 indicates that the server is denying the request as a consequence of evidence of operator impairment.</t>
-      <t>The server in question might not be an origin server.  An intermediate proxy closer to the operator may be in a better position to assess potential operator impairment.  Such a proxy may refuse to forward the request and respond with this error code.</t>
-      <t>There is no requirement that the operator be human.  Certain AI systems can exhibit behaviors such as giving fabricated, incorrect, and differing answers for a given input.  Given the speed at which such AI operates, it is no less important to detect the impairment of AI operators as human operators.</t>
-      <t>Such responses MAY include the inputs or evidence used to determine impairment, but SHOULD NOT reveal information that an operator can use to evade impairment detection.</t>
+      <name>420 Requester Impaired</name>
+      <t>The status code 420 indicates that the server is denying the request as a consequence of evidence of requester impairment.</t>
+      <t>The server in question might not be an origin server.  An intermediate proxy closer to the requester may be in a better position to assess potential requester impairment.  Such a proxy may refuse to forward the request and respond with this error code.</t>
+      <t>There is no requirement that the requester be human.  Certain AI systems can exhibit behaviors such as giving fabricated, incorrect, and differing answers for a given input.  Given the speed at which such AI operates, it is no less important to detect the impairment of AI requesters as human requesters.</t>
+      <t>Such responses MAY include the inputs or evidence used to determine impairment, but SHOULD NOT reveal information that an requester can use to evade impairment detection.</t>
       <t>A 420 response is non-cacheable by default, i.e., unless otherwise indicated by the method definition or explicit cache controls; see <xref target="RFC9111"/>.</t>
 
       <!--
@@ -135,16 +135,16 @@
         <name>Example Response</name>
         <sourcecode type="text">
           <![CDATA[
-HTTP/1.1 420 Operator Impaired
+HTTP/1.1 420 Requester Impaired
 Content-Type: text/html</t>
   <html>
     <head>
-      <title>Operator Impaired</title>
+      <title>Requester Impaired</title>
     </head>
     <body>
-      <h1>Operator Impaired</h1>
+      <h1>Requester Impaired</h1>
       <p>This request is denied due to detection
-         of operator impairment.</p>
+         of impairment.</p>
     </body>
   </html>
           ]]>
@@ -160,7 +160,7 @@ Content-Type: text/html</t>
       <t>IANA is asked to update the HTTP Status Codes Registry with the following entry:</t>
       <ul>
         <li>Code: 420</li>
-        <li>Description: Operator Impaired</li>
+        <li>Description: Requester Impaired</li>
         <li>Specification: This RFC</li>
       </ul>
 
@@ -169,7 +169,7 @@ Content-Type: text/html</t>
     <section anchor="Security">
       <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
       <name>Security Considerations</name>
-      <t>If the operators are identifiable because they have been authenticated and authorized, their authorization SHOULD be revoked until they have been determined not to be impaired.  If the operators are unauthenticated, further requests SHOULD be denied until it can be determined that no impaired operators are using the system.</t>
+      <t>If the requesters are identifiable because they have been authenticated and authorized, their authorization SHOULD be revoked until they have been determined not to be impaired.  If the requesters are unauthenticated, further requests SHOULD be denied until it can be determined that no impaired requesters are using the system.</t>
     </section>
     
     <!-- NOTE: The Acknowledgements and Contributors sections are at the end of this template -->
