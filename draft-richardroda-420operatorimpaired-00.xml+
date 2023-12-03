@@ -125,7 +125,7 @@
       <dl newline="true">
         <!-- Omit newline="true" if you want each definition to start on the same line as the corresponding term -->
         <dt>AI</dt>
-        <dd>An artificial intelligence system is capable of making independent decisions without direct human control.</dd>
+        <dd>An artificial intelligence system that is capable of making independent decisions without direct human control.</dd>
         <dt>proxy</dt>
         <dd>A server with a primary purpose of forwarding requests to other servers to process.</dd>
       </dl>
@@ -157,7 +157,7 @@ Content-Type: text/html</t>
     <section anchor="IANA">
     <!-- All drafts are required to have an IANA considerations section. See RFC 8126 for a guide.-->
       <name>IANA Considerations</name>
-      <t>IANA is asked to update the HTTP Status Codes Registry with the following entry</t>
+      <t>IANA is asked to update the HTTP Status Codes Registry with the following entry:</t>
       <ul>
         <li>Code: 420</li>
         <li>Description: Operator Impaired</li>
@@ -169,7 +169,7 @@ Content-Type: text/html</t>
     <section anchor="Security">
       <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
       <name>Security Considerations</name>
-      <t>If the operator is identifiable because they have been authenticated and authorized, their authorization SHOULD be revoked until they have been determined to be not impaired.  If the operators are unauthenticated, further requests SHOULD be denied until it can be determined that no impaired operators are using the system.</t>
+      <t>If the operators are identifiable because they have been authenticated and authorized, their authorization SHOULD be revoked until they have been determined not to be impaired.  If the operators are unauthenticated, further requests SHOULD be denied until it can be determined that no impaired operators are using the system.</t>
     </section>
     
     <!-- NOTE: The Acknowledgements and Contributors sections are at the end of this template -->
