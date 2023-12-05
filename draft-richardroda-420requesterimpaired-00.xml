@@ -89,9 +89,9 @@
     <section>
       <name>Introduction</name>
       <t>This document specifies a Hypertext Transfer Protocol (HTTP) status code for use when a request is denied because the requester is impaired.</t>
-      <t>This request code may be used to provide transparency in cases where one or more valid requests create a dangerous situation, there is a pattern of erratic requests with the potential for danger, or the requester is otherwise detected as impaired.</t>
-      <t>Network-controlled devices are being used for beneficial but potentially dangerous activities such as construction and remote surgery.  Transparency of requester impairment is important for both accurately assessing the risk a given requester presents and preventing damage caused by a high-risk requester.</t>
-      
+      <t>This request code may be used to provide visibility in cases where one or more valid requests create a dangerous situation, there is a pattern of erratic requests with the potential for danger, or the requester is otherwise detected as impaired.</t>
+      <t>Network-controlled devices are being used for beneficial but potentially dangerous activities such as construction and remote surgery.  Identifying requester impairment is important for both accurately assessing the risk a given requester presents and preventing damage caused by a high-risk requester.</t>
+
       <section>
         <name>Requirements Language</name>
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
@@ -109,8 +109,9 @@
       <name>420 Requester Impaired</name>
       <t>The status code 420 indicates that the server is denying the request as a consequence of evidence of requester impairment.</t>
       <t>The server in question might not be an origin server.  An intermediate proxy closer to the requester may be in a better position to assess potential requester impairment.  Such a proxy may refuse to forward the request and respond with this error code.</t>
-      <t>There is no requirement that the requester be human.  Certain AI systems can exhibit behaviors such as giving fabricated, incorrect, and differing answers for a given input.  Given the speed at which such AI operates, it is no less important to detect the impairment of AI requesters as human requesters.</t>
-      <t>Such responses MAY include the inputs or evidence used to determine impairment, but SHOULD NOT reveal information that an requester can use to evade impairment detection.</t>
+      <t>There is no requirement that the requester be human.  Certain AI systems can exhibit behaviors such as giving hallucinated, incorrect, and differing answers for a given input.  Given the speed at which such AI operates, it is no less important to detect the impairment of AI requesters as human requesters.</t>
+      <t>This response code provides greater visibility for requester impairment than the 403 Forbidden code.  Such visibility will aid network monitoring for impaired requesters.  This will improve remediation and risk assessment of possibly impaired requesters.</t>
+      <t>Such responses MAY include the inputs or evidence used to determine impairment, but SHOULD NOT reveal information that a requester can use to evade impairment detection.</t>
       <t>A 420 response is non-cacheable by default, i.e., unless otherwise indicated by the method definition or explicit cache controls; see <xref target="RFC9111"/>.</t>
 
       <!--
@@ -136,7 +137,7 @@
         <sourcecode type="text">
           <![CDATA[
 HTTP/1.1 420 Requester Impaired
-Content-Type: text/html</t>
+Content-Type: text/html
   <html>
     <head>
       <title>Requester Impaired</title>
