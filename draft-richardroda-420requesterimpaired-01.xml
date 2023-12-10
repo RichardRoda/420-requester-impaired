@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+     draft-rfcxml-general-template-standard-00
+  
+     This template includes examples of the most commonly used features of RFCXML with comments 
+     explaining how to customise them. This template can be quickly turned into an I-D by editing 
+     the examples provided. Look for [REPLACE], [REPLACE/DELETE], [CHECK] and edit accordingly.
+     Note - 'DELETE' means delete the element or attribute, not just the contents.
+     
+     Documentation is at https://authors.ietf.org/en/templates-and-schemas
+-->
+<?xml-model href="rfc7991bis.rnc"?>  <!-- Required for schema validation and schema-aware editing -->
+<!-- This third-party XSLT can be enabled for direct transformations in XML processors, including most browsers -->
+
+
+<!DOCTYPE rfc [
+  <!ENTITY nbsp    "&#160;">
+  <!ENTITY zwsp   "&#8203;">
+  <!ENTITY nbhy   "&#8209;">
+  <!ENTITY wj     "&#8288;">
+]>
+<!-- If further character entities are required then they should be added to the DOCTYPE above.
+     Use of an external entity file is not recommended. -->
+
+<rfc
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  category="info"
+  docName="draft-richardroda-420requesterimpaired-01"
+  ipr="trust200902"
+  obsoletes=""
+  updates=""
+  submissionType="IETF"
+  xml:lang="en"
+  version="3">
+<!-- [REPLACE] 
+       * docName with name of your draft
+     [CHECK] 
+       * category should be one of std, bcp, info, exp, historic
+       * ipr should be one of trust200902, noModificationTrust200902, noDerivativesTrust200902, pre5378Trust200902
+       * updates can be an RFC number as NNNN
+       * obsoletes can be an RFC number as NNNN 
+-->
+
+  <front>
+    <title abbrev="HTTP Requester Impairment Status Code">An HTTP Status Code to Report Requester Impairment</title>
+    <!--  [REPLACE/DELETE] abbrev. The abbreviated title is required if the full title is longer than 39 characters -->
+
+    <seriesInfo name="Internet-Draft" value="draft-richardroda-420requesterimpaired-01"/>
+   
+    <author fullname="Richard Roda" initials="RR" role="editor">
+      <!-- [CHECK]
+             * initials should not include an initial for the surname
+             * role="editor" is optional -->
+    <!-- Can have more than one author -->
+      
+    <!-- all of the following elements are optional -->
+      <address>
+        <email>richard_roda@hotmail.com</email>
+        <uri>https://www.linkedin.com/in/richardroda/</uri>
+      </address>
+    </author>
+
+    <date year="2023"/>
+    <!-- On draft subbmission:
+         * If only the current year is specified, the current day and month will be used.
+         * If the month and year are both specified and are the current ones, the current day will
+           be used
+         * If the year is not the current one, it is necessary to specify at least a month and day="1" will be used.
+    -->
+
+    <area>General</area>
+    <workgroup>Internet Engineering Task Force</workgroup>
+    <!-- "Internet Engineering Task Force" is fine for individual submissions.  If this element is 
+          not present, the default is "Network Working Group", which is used by the RFC Editor as 
+          a nod to the history of the RFC Series. -->
+
+    <keyword>HTTP</keyword>
+    <!-- [REPLACE/DELETE]. Multiple allowed.  Keywords are incorporated into HTML output files for 
+         use by search engines. -->
+
+    <abstract>
+      <t>This document specifies a Hypertext Transfer Protocol (HTTP) status code for use when an operation or resource is denied due to requester impairment.</t>
+    </abstract>
+ 
+  </front>
+
+  <middle>
+    
+    <section>
+      <name>Introduction</name>
+      <t>This document specifies a Hypertext Transfer Protocol (HTTP) status code for use when a request is denied because the requester is impaired.</t>
+      <t>This request code may be used to provide visibility in cases where one or more valid requests create a dangerous situation, there is a pattern of erratic requests with the potential for danger, or the requester is otherwise detected as impaired.</t>
+      <t>Network-controlled devices are being used for beneficial but potentially dangerous activities such as construction and remote surgery.  Identifying requester impairment is important for both accurately assessing the risk a given requester presents and preventing damage caused by a high-risk requester.</t>
+
+      <section>
+        <name>Requirements Language</name>
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+          "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT
+          RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
+          interpreted as described in BCP 14 <xref target="RFC2119"/>
+          <xref target="RFC8174"/> when, and only when, they appear in
+          all capitals, as shown here.</t>
+      </section>
+      <!-- [CHECK] The 'Requirements Language' section is optional -->
+
+    </section>
+    
+    <section>
+      <name>420 Requester Impaired</name>
+      <t>The status code 420 indicates that the server is denying the request as a consequence of evidence of requester impairment.</t>
+      <t>The server in question might not be an origin server.  An intermediate proxy closer to the requester may be in a better position to assess potential requester impairment.  Such a proxy may refuse to forward the request and respond with this error code.</t>
+      <t>There is no requirement that the requester be human.  Certain AI systems can exhibit behaviors such as giving hallucinated, incorrect, and differing answers for a given input.  Given the speed at which such AI operates, it is no less important to detect the impairment of AI requesters as human requesters.</t>
+      <t>This response code provides greater visibility for requester impairment than the 403 Forbidden code.  Such visibility will aid network monitoring for impaired requesters.  This will improve remediation and risk assessment of possibly impaired requesters.</t>
+      <t>Such responses MAY include the inputs or evidence used to determine impairment, but SHOULD NOT reveal information that a requester can use to evade impairment detection.</t>
+      <t>A 420 response is non-cacheable by default, i.e., unless otherwise indicated by the method definition or explicit cache controls; see <xref target="RFC9111"/>.</t>
+
+      <!--
+      <ol>
+        <li>Ordered list item [REPLACE/DELETE]</li>
+      </ol>
+      
+      <ul>
+        <li>Bulleted list item [REPLACE/DELETE]</li>
+      </ul>
+-     -->
+      <dl newline="true">
+        <!-- Omit newline="true" if you want each definition to start on the same line as the corresponding term -->
+        <dt>AI</dt>
+        <dd>An artificial intelligence system that is capable of making independent decisions without direct human control.</dd>
+        <dt>proxy</dt>
+        <dd>A server with a primary purpose of forwarding requests to other servers to process.</dd>
+      </dl>
+
+
+      <figure>
+        <name>Example Response</name>
+        <sourcecode type="text">
+          <![CDATA[
+HTTP/1.1 420 Requester Impaired
+Content-Type: text/html
+  <html>
+    <head>
+      <title>Requester Impaired</title>
+    </head>
+    <body>
+      <h1>Requester Impaired</h1>
+      <p>This request is denied due to detection
+         of impairment.</p>
+    </body>
+  </html>
+          ]]>
+        </sourcecode>
+        <!-- [CHECK] markers="true" means that the rendered file will have <CODE BEGINS> and <CODE ENDS> added -->
+      </figure>
+
+    </section>   
+    
+    <section anchor="IANA">
+    <!-- All drafts are required to have an IANA considerations section. See RFC 8126 for a guide.-->
+      <name>IANA Considerations</name>
+      <t>IANA is asked to update the HTTP Status Codes Registry with the following entry:</t>
+      <ul>
+        <li>Code: 420</li>
+        <li>Description: Requester Impaired</li>
+        <li>Specification: This RFC</li>
+      </ul>
+
+    </section>
+    
+    <section anchor="Security">
+      <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
+      <name>Security Considerations</name>
+      <t>If the impaired requesters are identifiable because they have been authenticated, their requests SHOULD be denied until they have been determined not to be impaired.  If the impaired requesters are unauthenticated, all requests SHOULD be denied until it can be determined that no impaired requesters are using the system.</t>
+    </section>
+    
+    <!-- NOTE: The Acknowledgements and Contributors sections are at the end of this template -->
+  </middle>
+
+  <back>
+    <references>
+      <name>References</name>
+      <references>
+        <name>Normative References</name>
+        
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9111.xml"/>
+        <!-- The recommended and simplest way to include a well known reference -->
+        
+      </references>
+    </references>
+ </back>
+</rfc>
