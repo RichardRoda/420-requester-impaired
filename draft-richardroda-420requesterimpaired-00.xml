@@ -170,7 +170,7 @@ Content-Type: text/html
     <section anchor="Security">
       <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
       <name>Security Considerations</name>
-      <t>If the requesters are identifiable because they have been authenticated and authorized, their authorization SHOULD be revoked until they have been determined not to be impaired.  If the requesters are unauthenticated, further requests SHOULD be denied until it can be determined that no impaired requesters are using the system.</t>
+      <t>If the impaired requesters are identifiable because they have been authenticated, their requests SHOULD be denied until they have been determined not to be impaired.  If the impaired requesters are unauthenticated, all requests SHOULD be denied until it can be determined that no impaired requesters are using the system.</t>
     </section>
     
     <!-- NOTE: The Acknowledgements and Contributors sections are at the end of this template -->
