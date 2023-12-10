@@ -133,22 +133,18 @@
 
 
       <figure>
-        <name>Example Response</name>
+        <name>Example Response in <xref target="RFC9457"/> Problem Details Format</name>
         <sourcecode type="text">
           <![CDATA[
 HTTP/1.1 420 Requester Impaired
-Content-Type: text/html
-  <html>
-    <head>
-      <title>Requester Impaired</title>
-    </head>
-    <body>
-      <h1>Requester Impaired</h1>
-      <p>This request is denied due to detection
-         of impairment.</p>
-    </body>
-  </html>
-          ]]>
+Content-Type: application/problem+json
+Content-Language: en
+{ 
+    "type": "https://example.com/erratic-requests",
+    "title": "Requester Impaired: Erratic Behavior Detected.",
+    "detail": "Potentially dangerous and erratic requests detected."
+}
+]]>
         </sourcecode>
         <!-- [CHECK] markers="true" means that the rendered file will have <CODE BEGINS> and <CODE ENDS> added -->
       </figure>
@@ -185,6 +181,7 @@ Content-Type: text/html
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9111.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9457.xml"/>
         <!-- The recommended and simplest way to include a well known reference -->
         
       </references>
