@@ -25,7 +25,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="info"
-  docName="draft-richardroda-420requesterimpaired-01"
+  docName="draft-richardroda-420requesterimpaired-02"
   ipr="trust200902"
   obsoletes=""
   updates=""
@@ -45,7 +45,7 @@
     <title abbrev="HTTP Requester Impairment Status Code">An HTTP Status Code to Report Requester Impairment</title>
     <!--  [REPLACE/DELETE] abbrev. The abbreviated title is required if the full title is longer than 39 characters -->
 
-    <seriesInfo name="Internet-Draft" value="draft-richardroda-420requesterimpaired-01"/>
+    <seriesInfo name="Internet-Draft" value="draft-richardroda-420requesterimpaired-02"/>
    
     <author fullname="Richard Roda" initials="RR" role="editor">
       <!-- [CHECK]
@@ -68,8 +68,8 @@
          * If the year is not the current one, it is necessary to specify at least a month and day="1" will be used.
     -->
 
-    <area>General</area>
-    <workgroup>Internet Engineering Task Force</workgroup>
+    <area>Applications and Real-Time Area</area>
+    <workgroup>HTTP</workgroup>
     <!-- "Internet Engineering Task Force" is fine for individual submissions.  If this element is 
           not present, the default is "Network Working Group", which is used by the RFC Editor as 
           a nod to the history of the RFC Series. -->
