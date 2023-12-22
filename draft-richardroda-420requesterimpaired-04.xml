@@ -25,7 +25,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="info"
-  docName="draft-richardroda-420requesterimpaired-00"
+  docName="draft-richardroda-420requesterimpaired-03"
   ipr="trust200902"
   obsoletes=""
   updates=""
@@ -45,7 +45,7 @@
     <title abbrev="HTTP Requester Impairment Status Code">An HTTP Status Code to Report Requester Impairment</title>
     <!--  [REPLACE/DELETE] abbrev. The abbreviated title is required if the full title is longer than 39 characters -->
 
-    <seriesInfo name="Internet-Draft" value="draft-richardroda-420requesterimpaired-00"/>
+    <seriesInfo name="Internet-Draft" value="draft-richardroda-420requesterimpaired-03"/>
    
     <author fullname="Richard Roda" initials="RR" role="editor">
       <!-- [CHECK]
@@ -68,8 +68,8 @@
          * If the year is not the current one, it is necessary to specify at least a month and day="1" will be used.
     -->
 
-    <area>General</area>
-    <workgroup>Internet Engineering Task Force</workgroup>
+    <area>Applications and Real-Time Area</area>
+    <workgroup>HTTP</workgroup>
     <!-- "Internet Engineering Task Force" is fine for individual submissions.  If this element is 
           not present, the default is "Network Working Group", which is used by the RFC Editor as 
           a nod to the history of the RFC Series. -->
@@ -89,9 +89,6 @@
     <section>
       <name>Introduction</name>
       <t>This document specifies a Hypertext Transfer Protocol (HTTP) status code for use when a request is denied because the requester is impaired.</t>
-      <t>This request code may be used to provide visibility in cases where one or more valid requests create a dangerous situation, there is a pattern of erratic requests with the potential for danger, or the requester is otherwise detected as impaired.</t>
-      <t>Network-controlled devices are being used for beneficial but potentially dangerous activities such as construction and remote surgery.  Identifying requester impairment is important for both accurately assessing the risk a given requester presents and preventing damage caused by a high-risk requester.</t>
-
       <section>
         <name>Requirements Language</name>
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
@@ -109,9 +106,8 @@
       <name>420 Requester Impaired</name>
       <t>The status code 420 indicates that the server is denying the request as a consequence of evidence of requester impairment.</t>
       <t>The server in question might not be an origin server.  An intermediate proxy closer to the requester may be in a better position to assess potential requester impairment.  Such a proxy may refuse to forward the request and respond with this error code.</t>
-      <t>There is no requirement that the requester be human.  Certain AI systems can exhibit behaviors such as giving hallucinated, incorrect, and differing answers for a given input.  Given the speed at which such AI operates, it is no less important to detect the impairment of AI requesters as human requesters.</t>
-      <t>This response code provides greater visibility for requester impairment than the 403 Forbidden code.  Such visibility will aid network monitoring for impaired requesters.  This will improve remediation and risk assessment of possibly impaired requesters.</t>
-      <t>Such responses MAY include the inputs or evidence used to determine impairment, but SHOULD NOT reveal information that a requester can use to evade impairment detection.</t>
+      <t>There is no requirement that the requester be human.  Certain AI systems can exhibit behaviors such as giving hallucinated, incorrect, and differing answers for a given input.</t>
+      <t>420 responses MUST include a Link header <xref target="RFC8288"/> with a relation type of "status".  This link is used by the remediated requester to obtain information about the server state and to signal to the server that the requester is remediated.  Requesters SHOULD use this link when remediated before making subsequent requests unless a bearer token is used as described under <xref target="Security"/> and the server does not require usage of the link.</t>
       <t>A 420 response is non-cacheable by default, i.e., unless otherwise indicated by the method definition or explicit cache controls; see <xref target="RFC9111"/>.</t>
 
       <!--
@@ -133,22 +129,19 @@
 
 
       <figure>
-        <name>Example Response</name>
+        <name>Example Response in <xref target="RFC9457"/> Problem Details Format</name>
         <sourcecode type="text">
           <![CDATA[
 HTTP/1.1 420 Requester Impaired
-Content-Type: text/html
-  <html>
-    <head>
-      <title>Requester Impaired</title>
-    </head>
-    <body>
-      <h1>Requester Impaired</h1>
-      <p>This request is denied due to detection
-         of impairment.</p>
-    </body>
-  </html>
-          ]]>
+Link: <https://example.com/impaired/remediated>; rel="status"
+Content-Type: application/problem+json
+Content-Language: en
+{ 
+    "type": "https://example.com/erratic-requests",
+    "title": "Requester Impaired: Erratic Behavior Detected.",
+    "detail": "Erratic requests detected."
+}
+]]>
         </sourcecode>
         <!-- [CHECK] markers="true" means that the rendered file will have <CODE BEGINS> and <CODE ENDS> added -->
       </figure>
@@ -170,7 +163,8 @@ Content-Type: text/html
     <section anchor="Security">
       <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
       <name>Security Considerations</name>
-      <t>If the requesters are identifiable because they have been authenticated and authorized, their authorization SHOULD be revoked until they have been determined not to be impaired.  If the requesters are unauthenticated, further requests SHOULD be denied until it can be determined that no impaired requesters are using the system.</t>
+      <t>The usage of the link resource provided by the Link header to assert requester remediation assumes a requester or proxy that is trustworthy enough to halt requests and only access the link resource after requester remediation.  If greater security is required, perhaps to enable an external system to remediate and validate the requester, a server MAY require an OAuth authorization <xref target="RFC7523"/> bearer token <xref target="RFC6750"/> to signal remediation of the requester.</t>
+      <t>If a valid bearer token is required and missing, further requests SHOULD be rejected with a 403 Forbidden response code with the insufficient_scope error code and scope attribute naming the authorization token required as described in <xref target="RFC6750"/> section 3.1.  Once this authorization bearer token is validated the server MAY allow requests without using the Link provided in the 420 response, but MUST NOT respond to usage of the link as an error.</t>
     </section>
     
     <!-- NOTE: The Acknowledgements and Contributors sections are at the end of this template -->
@@ -185,6 +179,10 @@ Content-Type: text/html
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9111.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9457.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8288.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7523.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6750.xml"/>
         <!-- The recommended and simplest way to include a well known reference -->
         
       </references>
